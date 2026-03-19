@@ -1,7 +1,7 @@
 import { OnlineCardDialog } from "./OnlineCardDialog"
 import { Thermometer, Droplets } from "lucide-react"
 
-import { store, type Card } from "@/store/store"
+import { store, showHistory, type Card } from "@/store/store"
 import { useSnapshot } from "valtio"
 
 interface Props {
@@ -12,8 +12,15 @@ export function OnlineCard({ card }: Props) {
     const { editMode } = useSnapshot(store.global)
     const { name, temperature, moisture } = useSnapshot(card)
 
+    const hadnleDoubleClick = () => {
+        showHistory()
+    }
+
     return (
-        <div className="flex flex-col items-center border-1 p-2 text-center">
+        <div
+            className="flex flex-col items-center border-1 p-2 text-center"
+            onDoubleClick={hadnleDoubleClick}
+        >
             <div className="flex h-6 w-full items-center justify-between">
                 <h3 className="">{name}</h3>
                 {editMode && (

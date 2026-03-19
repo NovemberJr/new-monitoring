@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { OnlinePanel } from "./OnlinePanel"
 import { OnlineLogin } from "./OnlineLogin"
 import { CirclePlus } from "lucide-react"
@@ -28,7 +28,13 @@ export function Online() {
                 <OnlineLogin editMode={editMode} logged={logged} />
             </div>
             {panels.map((panel, i) => (
-                <OnlinePanel key={panel.id} panel={store.panels[i]} />
+                <TabsContent
+                    key={panel.id}
+                    value={`${panel.id}`}
+                    className="grid grid-cols-5 grid-rows-5 gap-2 border-1 p-2"
+                >
+                    <OnlinePanel panel={store.panels[i]} />
+                </TabsContent>
             ))}
         </Tabs>
     )

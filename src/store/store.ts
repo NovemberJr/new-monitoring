@@ -9,6 +9,7 @@ type Store = {
     activePanel: string | undefined
     panels: Panel[]
     panelsCount: number
+    activeAppTab: "online" | "history"
 }
 
 export type Measure = {
@@ -74,6 +75,14 @@ export const deleteCard = (card: Card) => {
     if (idx > -1) panel?.cards.splice(idx, 1)
 }
 
+export const showHistory = () => {
+    store.activeAppTab = "history"
+}
+
+export const showOnline = () => {
+    store.activeAppTab = "online"
+}
+
 export const store = proxy<Store>({
     global: {
         editMode: false,
@@ -83,6 +92,7 @@ export const store = proxy<Store>({
     activePanel: undefined,
     panelsCount: 0,
     panels: [],
+    activeAppTab: "online",
 })
 
 addPanel()
