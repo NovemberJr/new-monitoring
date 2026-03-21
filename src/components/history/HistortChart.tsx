@@ -21,6 +21,7 @@ interface Props {
     beginAtZero: boolean
     chartData: { label: string; data: any }[]
     date: any
+    className?: string
 }
 
 ChartJS.register(
@@ -37,9 +38,14 @@ ChartJS.register(
     // zoomPlugin
 )
 
-const chartjsColors = ["#36A2EB", "#FF6384", "#FF9F40"]
+const chartjsColors = ["#FF6384", "#36A2EB", "#FF9F40"]
 
-export const HistoryChart = ({ chartData, date, beginAtZero }: Props) => {
+export const HistoryChart = ({
+    chartData,
+    date,
+    beginAtZero,
+    className,
+}: Props) => {
     const data: ChartDataType<"line"> = {
         datasets: chartData.map((ds, i) => ({
             borderColor: chartjsColors[i],
@@ -109,5 +115,13 @@ export const HistoryChart = ({ chartData, date, beginAtZero }: Props) => {
         },
     }
 
-    return <Line data={data} options={options} width={800} height={350} />
+    return (
+        <Line
+            data={data}
+            options={options}
+            width={800}
+            height={350}
+            className={className}
+        />
+    )
 }

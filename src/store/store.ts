@@ -6,10 +6,12 @@ type Store = {
         logged: boolean
     }
     rooms: string[]
+    activeRoom: any
     activePanel: string | undefined
     panels: Panel[]
     panelsCount: number
     activeAppTab: "online" | "history"
+    historyInterval: string[]
 }
 
 export type Measure = {
@@ -75,8 +77,13 @@ export const deleteCard = (card: Card) => {
     if (idx > -1) panel?.cards.splice(idx, 1)
 }
 
-export const showHistory = () => {
+export const showHistory = (dto: any) => {
     store.activeAppTab = "history"
+    store.activeRoom = dto
+}
+
+export const setHistoryInterval = (value: string[]) => {
+    store.historyInterval = value
 }
 
 export const showOnline = () => {
@@ -89,10 +96,12 @@ export const store = proxy<Store>({
         logged: false,
     },
     rooms: ["Склад", "Цех", "Холодильник"],
+    activeRoom: undefined,
     activePanel: undefined,
     panelsCount: 0,
     panels: [],
     activeAppTab: "online",
+    historyInterval: ["24"],
 })
 
 addPanel()

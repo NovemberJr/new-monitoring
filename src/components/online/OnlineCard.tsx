@@ -13,7 +13,11 @@ export function OnlineCard({ card }: Props) {
     const { name, temperature, moisture } = useSnapshot(card)
 
     const hadnleDoubleClick = () => {
-        showHistory()
+        showHistory({
+            name: card.name,
+            temperature: !!temperature,
+            moisture: !!moisture,
+        })
     }
 
     return (
