@@ -47,6 +47,18 @@ export const addPanel = () => {
     selectPanel(id)
 }
 
+export const deletePanel = (id: number) => {
+    if (store.panels.length == 1) return
+
+    const idx = store.panels.findIndex((el) => el.id === id)
+    store.panels.splice(idx, 1)
+    if (idx === store.panels.length) {
+        store.activePanel = `${store.panels[idx - 1].id}`
+    } else {
+        store.activePanel = `${store.panels[idx].id}`
+    }
+}
+
 export const selectPanel = (idx: number) => {
     store.activePanel = `${idx}`
 }

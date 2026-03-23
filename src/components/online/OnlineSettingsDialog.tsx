@@ -2,6 +2,7 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
+    DialogFooter,
     // DialogDescription,
     // DialogFooter,
     DialogHeader,
@@ -20,7 +21,9 @@ import {
 import { Settings } from "lucide-react"
 import { Button } from "../ui/button"
 
-interface Props {}
+interface Props {
+    deletePanel: () => void
+}
 
 const items = [
     { label: "Выберите экран", value: null },
@@ -29,11 +32,11 @@ const items = [
     { label: "TV3", value: "3" },
 ]
 
-export function OnlineSettingsDialog({}: Props) {
+export function OnlineSettingsDialog({ deletePanel }: Props) {
     return (
         <Dialog>
             <DialogTrigger>
-                <Settings className="h-6 cursor-pointer" />
+                <Settings className="h-6 w-5 cursor-pointer transition-all hover:text-white" />
             </DialogTrigger>
             <DialogContent className="sm:max-w-sm">
                 <DialogHeader>
@@ -54,9 +57,20 @@ export function OnlineSettingsDialog({}: Props) {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-                <DialogClose>
-                    <Button type="submit">Применить</Button>
-                </DialogClose>
+                <DialogFooter>
+                    <DialogClose>
+                        <Button type="submit" className="cursor-pointer">
+                            Применить
+                        </Button>
+                    </DialogClose>
+                    <Button
+                        variant="destructive"
+                        className="cursor-pointer"
+                        onClick={deletePanel}
+                    >
+                        Удалить панель
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

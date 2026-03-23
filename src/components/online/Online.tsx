@@ -4,7 +4,7 @@ import { OnlineLogin } from "./OnlineLogin"
 import { OnlineSettingsDialog } from "./OnlineSettingsDialog"
 import { CirclePlus } from "lucide-react"
 
-import { store, addPanel, selectPanel } from "@/store/store"
+import { store, addPanel, deletePanel, selectPanel } from "@/store/store"
 import { useSnapshot } from "valtio"
 
 export function Online() {
@@ -19,18 +19,41 @@ export function Online() {
                     variant="line"
                 >
                     {panels.map((el) => (
-                        <TabsTrigger
-                            key={el.id}
-                            value={`${el.id}`}
-                            onClick={() => selectPanel(el.id)}
-                            className="flex-0"
-                        >
-                            {el.name}
-                            {editMode && <OnlineSettingsDialog />}
-                        </TabsTrigger>
+                        <div key={el.id} className="flex">
+                            {editMode && (
+                                <style>
+                                    {`
+								button[aria-selected="true"] + button {
+									color: white;
+								}
+								button[role="tab"]:hover + button {
+									color: white;
+								}
+								button[aria-selected="true"]::after {
+									right: -20px;
+								}
+							`}
+                                </style>
+                            )}
+                            <TabsTrigger
+                                value={`${el.id}`}
+                                onClick={() => selectPanel(el.id)}
+                                className="flex-0"
+                            >
+                                {el.name}
+                            </TabsTrigger>
+                            {editMode && (
+                                <OnlineSettingsDialog
+                                    deletePanel={() => deletePanel(el.id)}
+                                />
+                            )}
+                        </div>
                     ))}
                     {editMode && (
-                        <CirclePlus onClick={addPanel} className="h-5" />
+                        <CirclePlus
+                            onClick={addPanel}
+                            className="h-5 hover:text-white"
+                        />
                     )}
                 </TabsList>
                 <div
