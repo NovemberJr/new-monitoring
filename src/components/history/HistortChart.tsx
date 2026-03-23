@@ -119,7 +119,7 @@ export const HistoryChart = ({
         <Line
             data={data}
             options={options}
-            width={800}
+            width={850}
             height={350}
             className={className}
         />

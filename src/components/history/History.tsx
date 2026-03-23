@@ -70,7 +70,7 @@ export function History() {
     }
 
     return (
-        <div className="h-[800px] w-[1200px]">
+        <div className="min-h-[800px] w-[1200px]">
             <div className="flex">
                 <button onClick={showOnline} className="ml-auto">
                     <Undo2 />
@@ -80,7 +80,7 @@ export function History() {
                 <Accordion
                     value={accordionValue}
                     onValueChange={setAccordionValue}
-                    className="w-[200px]"
+                    className="box-content w-[200px] rounded-lg bg-zinc-800 p-3"
                 >
                     {rooms.map((room) => (
                         <AccordionItem key={room} value={room}>
@@ -106,46 +106,85 @@ export function History() {
                         </AccordionItem>
                     ))}
                 </Accordion>
-                <div>
-                    <HistoryChart
-                        chartData={chartData.filter((_, i) => {
-                            if (i === 0 && tempCheckbox) return true
-                            if (i === 1 && moisCheckbox) return true
-                            return false
-                        })}
-                        date={chartDate}
-                        beginAtZero={false}
-                        // className="w-[600px]"
-                    />
-                    <Button
-                        onClick={() => {
-                            setShowAside(!showAside)
-                        }}
-                        className="mt-4"
-                    >
-                        Показать
-                    </Button>
+                <div className="flex max-h-[500px] flex-col gap-3">
+                    {tempCheckbox && (
+                        <HistoryChart
+                            chartData={chartData.filter((_, i) => {
+                                if (i === 0) return true
+                                return false
+                            })}
+                            date={chartDate}
+                            beginAtZero={false}
+                            className="rounded-lg bg-zinc-800 p-3"
+                        />
+                    )}
+                    {moisCheckbox && (
+                        <HistoryChart
+                            chartData={chartData.filter((_, i) => {
+                                if (i === 1) return true
+                                return false
+                            })}
+                            date={chartDate}
+                            beginAtZero={false}
+                            className="rounded-lg bg-zinc-800 p-3"
+                        />
+                    )}
                     <div
-                        className={cn("opacity-0 transition-opacity", {
-                            "opacity-100": showAside,
+                        className={cn("rounded-lg bg-zinc-800", {
+                            // "bg-zinc-900": !showAside,
                         })}
                     >
-                        <ToggleGroup
-                            value={historyInterval}
-                            onValueChange={handleToggleChange}
-                            className="mt-4 border-1"
+                        <Button
+                            onClick={() => {
+                                setShowAside(!showAside)
+                            }}
+                            className="w-full cursor-pointer"
                         >
-                            <ToggleGroupItem value="1">1 час</ToggleGroupItem>
-                            <ToggleGroupItem value="6">6 часов</ToggleGroupItem>
-                            <ToggleGroupItem value="12">
-                                12 часов
-                            </ToggleGroupItem>
-                            <ToggleGroupItem value="24">
-                                24 часа
-                            </ToggleGroupItem>
-                        </ToggleGroup>
-                        <Button className="mt-2">Выгрузить в Excel</Button>
-                        <Button className="ml-2">Печать</Button>
+                            Показать
+                        </Button>
+                        <div
+                            className={cn("hidden p-3 transition-opacity", {
+                                // "opacity-100": showAside,
+                                block: showAside,
+                            })}
+                        >
+                            <ToggleGroup
+                                value={historyInterval}
+                                onValueChange={handleToggleChange}
+                                className="border-1"
+                            >
+                                <ToggleGroupItem
+                                    value="1"
+                                    className="cursor-pointer"
+                                >
+                                    1 час
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value="6"
+                                    className="cursor-pointer"
+                                >
+                                    6 часов
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value="12"
+                                    className="cursor-pointer"
+                                >
+                                    12 часов
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value="24"
+                                    className="cursor-pointer"
+                                >
+                                    24 часа
+                                </ToggleGroupItem>
+                            </ToggleGroup>
+                            <Button className="mt-2 cursor-pointer">
+                                Выгрузить в Excel
+                            </Button>
+                            <Button className="ml-2 cursor-pointer">
+                                Печать
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
