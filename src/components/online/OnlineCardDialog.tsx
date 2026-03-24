@@ -22,7 +22,7 @@ interface Props {
     card: Card
 }
 
-export function OnlineCardDialog({ temperature, moisture, card }: Props) {
+export function OnlineCardDialog({ name, temperature, moisture, card }: Props) {
     // const [nameInput, setNameInput] = useState(name)
     const [tMin, setTMin] = useState(temperature?.min)
     const [tMax, setTMax] = useState(temperature?.max)
@@ -52,6 +52,15 @@ export function OnlineCardDialog({ temperature, moisture, card }: Props) {
                     <DialogDescription>Задайте уставку</DialogDescription>
                 </DialogHeader>
                 <FieldGroup>
+                    {/* <Field>
+                        <Label htmlFor="name">Название</Label>
+                        <Input
+                            id="name"
+                            name="name"
+                            value={nameInput}
+                            onChange={(e) => setNameInput(e.target.value)}
+                        />
+                    </Field> */}
                     {temperature && (
                         <>
                             <h3 className="font-bold">Температура</h3>

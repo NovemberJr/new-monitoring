@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
     Dialog,
     DialogClose,
@@ -20,8 +21,13 @@ import {
 } from "@/components/ui/select"
 import { Settings } from "lucide-react"
 import { Button } from "../ui/button"
+import { Field } from "../ui/field"
+import { Label } from "../ui/label"
+import { Input } from "../ui/input"
 
 interface Props {
+    name: string
+    panel: any
     deletePanel: () => void
 }
 
@@ -32,16 +38,33 @@ const items = [
     { label: "TV3", value: "3" },
 ]
 
-export function OnlineSettingsDialog({ deletePanel }: Props) {
+export function OnlineSettingsDialog({ name, panel, deletePanel }: Props) {
+    const [nameInput, setNameInput] = useState(name)
+
+    const onOpenChange = (open: boolean) => {
+        if (open) return
+
+        panel.name = nameInput
+    }
+
     return (
-        <Dialog>
+        <Dialog onOpenChange={onOpenChange}>
             <DialogTrigger>
                 <Settings className="h-6 w-5 cursor-pointer transition-all hover:text-white" />
             </DialogTrigger>
             <DialogContent className="sm:max-w-sm">
                 <DialogHeader>
-                    <DialogTitle>Выберите экран</DialogTitle>
+                    <DialogTitle>Настройки панели</DialogTitle>
                 </DialogHeader>
+                <Field>
+                    <Label htmlFor="name">Название</Label>
+                    <Input
+                        id="name"
+                        name="name"
+                        value={nameInput}
+                        onChange={(e) => setNameInput(e.target.value)}
+                    />
+                </Field>
                 <Select items={items}>
                     <SelectTrigger className="w-full max-w-48">
                         <SelectValue />
@@ -58,10 +81,8 @@ export function OnlineSettingsDialog({ deletePanel }: Props) {
                     </SelectContent>
                 </Select>
                 <DialogFooter>
-                    <DialogClose>
-                        <Button type="submit" className="cursor-pointer">
-                            Применить
-                        </Button>
+                    <DialogClose className="cursor-pointer">
+                        Применить
                     </DialogClose>
                     <Button
                         variant="destructive"

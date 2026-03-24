@@ -18,7 +18,7 @@ export function Online() {
                     className="min-w-[500px] justify-start bg-zinc-800"
                     variant="line"
                 >
-                    {panels.map((el) => (
+                    {panels.map((el, i) => (
                         <div key={el.id} className="flex">
                             {editMode && (
                                 <style>
@@ -44,6 +44,8 @@ export function Online() {
                             </TabsTrigger>
                             {editMode && (
                                 <OnlineSettingsDialog
+                                    name={el.name}
+                                    panel={store.panels[i]}
                                     deletePanel={() => deletePanel(el.id)}
                                 />
                             )}

@@ -12,7 +12,12 @@ export function OnlineCard({ card }: Props) {
     const { editMode } = useSnapshot(store.global)
     const { name, temperature, moisture } = useSnapshot(card)
 
-    const hadnleDoubleClick = () => {
+    const hadnleDoubleClick = (e: any) => {
+        if (e.target != e.currentTarget) {
+            e.stopPropagation()
+            return
+        }
+
         showHistory({
             name: card.name,
             temperature: !!temperature,
