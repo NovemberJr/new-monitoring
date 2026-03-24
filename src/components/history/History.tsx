@@ -1,10 +1,10 @@
 import { useState } from "react"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
+// import {
+//     Accordion,
+//     AccordionContent,
+//     AccordionItem,
+//     AccordionTrigger,
+// } from "@/components/ui/accordion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "../ui/label"
 import { HistoryChart } from "./HistortChart"
@@ -20,9 +20,9 @@ import { cn } from "@/lib/utils"
 
 export function History() {
     const { rooms, activeRoom, historyInterval } = useSnapshot(store)
-    const [accordionValue, setAccordionValue] = useState<string[]>([
-        activeRoom.name,
-    ])
+    // const [accordionValue, setAccordionValue] = useState<string[]>([
+    //     activeRoom.name,
+    // ])
     const [tempCheckbox, _setTempCheckbox] = useState(!!activeRoom.temperature)
     const [moisCheckbox, _setMoisCheckbox] = useState(!!activeRoom.moisture)
     const [showAside, setShowAside] = useState(false)
@@ -77,7 +77,33 @@ export function History() {
                 </button>
             </div>
             <div className="flex gap-4">
-                <Accordion
+                {rooms
+                    .filter((room) => room === activeRoom.name)
+                    .map((room) => (
+                        <div
+                            key={room}
+                            className="box-content w-[200px] rounded-lg bg-zinc-800 p-3"
+                        >
+                            <h3 className="mb-4 text-lg">{room}</h3>
+                            <div className="flex gap-2">
+                                <Checkbox
+                                    id="temp"
+                                    name="temp"
+                                    checked={tempCheckbox}
+                                />
+                                <Label htmlFor="temp">Температура</Label>
+                            </div>
+                            <div className="mt-4 flex gap-2">
+                                <Checkbox
+                                    id="mois"
+                                    name="mois"
+                                    checked={moisCheckbox}
+                                />
+                                <Label htmlFor="mois">Влажность</Label>
+                            </div>
+                        </div>
+                    ))}
+                {/* <Accordion
                     value={accordionValue}
                     onValueChange={setAccordionValue}
                     className="box-content w-[200px] rounded-lg bg-zinc-800 p-3"
@@ -105,7 +131,7 @@ export function History() {
                             </AccordionContent>
                         </AccordionItem>
                     ))}
-                </Accordion>
+                </Accordion> */}
                 <div className="flex max-h-[500px] flex-col gap-3">
                     {tempCheckbox && (
                         <HistoryChart
