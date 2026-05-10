@@ -22,7 +22,7 @@ interface Props {
     card: Card
 }
 
-export function OnlineCardDialog({ name, temperature, moisture, card }: Props) {
+export function OnlineCardDialog({ temperature, moisture, card }: Props) {
     // const [nameInput, setNameInput] = useState(name)
     const [tMin, setTMin] = useState(temperature?.min)
     const [tMax, setTMax] = useState(temperature?.max)

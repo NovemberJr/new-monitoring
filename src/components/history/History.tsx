@@ -8,6 +8,7 @@ import { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "../ui/label"
 import { HistoryChart } from "./HistortChart"
+import { HistoryDatepicker } from "./HistoryDatepicker"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Button } from "@/components/ui/button"
 import { Undo2 } from "lucide-react"
@@ -82,7 +83,7 @@ export function History() {
                     .map((room) => (
                         <div
                             key={room}
-                            className="box-content w-[200px] rounded-lg bg-zinc-800 p-3"
+                            className="box-content h-[500px] w-[200px] rounded-lg bg-zinc-800 p-3"
                         >
                             <h3 className="mb-4 text-lg">{room}</h3>
                             <div className="flex gap-2">
@@ -132,7 +133,7 @@ export function History() {
                         </AccordionItem>
                     ))}
                 </Accordion> */}
-                <div className="flex max-h-[500px] flex-col gap-3">
+                <div className="flex min-h-[500px] flex-col gap-3">
                     {tempCheckbox && (
                         <HistoryChart
                             chartData={chartData.filter((_, i) => {
@@ -169,47 +170,69 @@ export function History() {
                             Показать
                         </Button>
                         <div
-                            className={cn("hidden p-3 transition-opacity", {
-                                // "opacity-100": showAside,
-                                block: showAside,
-                            })}
+                            className={cn(
+                                "hidden justify-between p-3 transition-opacity",
+                                {
+                                    // "opacity-100": showAside,
+                                    flex: showAside,
+                                }
+                            )}
                         >
-                            <ToggleGroup
-                                value={historyInterval}
-                                onValueChange={handleToggleChange}
-                                className="border-1"
-                            >
-                                <ToggleGroupItem
-                                    value="1"
-                                    className="cursor-pointer"
+                            <div>
+                                <ToggleGroup
+                                    value={historyInterval}
+                                    onValueChange={handleToggleChange}
+                                    className="border-1"
                                 >
-                                    1 час
-                                </ToggleGroupItem>
-                                <ToggleGroupItem
-                                    value="6"
-                                    className="cursor-pointer"
-                                >
-                                    6 часов
-                                </ToggleGroupItem>
-                                <ToggleGroupItem
-                                    value="12"
-                                    className="cursor-pointer"
-                                >
-                                    12 часов
-                                </ToggleGroupItem>
-                                <ToggleGroupItem
-                                    value="24"
-                                    className="cursor-pointer"
-                                >
-                                    24 часа
-                                </ToggleGroupItem>
-                            </ToggleGroup>
-                            <Button className="mt-2 cursor-pointer">
-                                Выгрузить в Excel
-                            </Button>
-                            <Button className="ml-2 cursor-pointer">
-                                Печать
-                            </Button>
+                                    <ToggleGroupItem
+                                        value="1"
+                                        className="cursor-pointer"
+                                    >
+                                        1 час
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="6"
+                                        className="cursor-pointer"
+                                    >
+                                        6 часов
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="12"
+                                        className="cursor-pointer"
+                                    >
+                                        12 часов
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="24"
+                                        className="cursor-pointer"
+                                    >
+                                        24 часа
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="custom"
+                                        className="cursor-pointer"
+                                    >
+                                        Свой
+                                    </ToggleGroupItem>
+                                </ToggleGroup>
+                                <Button className="mt-2 cursor-pointer">
+                                    Выгрузить в Excel
+                                </Button>
+                                <Button className="ml-2 cursor-pointer">
+                                    Печать
+                                </Button>
+                            </div>
+                            {historyInterval[0] == "custom" && (
+                                <div>
+                                    <div className="flex items-center justify-between gap-3">
+                                        Начало: <HistoryDatepicker />
+                                    </div>
+                                    <div className="mt-2 flex items-center justify-between gap-3">
+                                        Конец: <HistoryDatepicker />
+                                    </div>
+                                    <Button className="mt-2">Построить</Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
